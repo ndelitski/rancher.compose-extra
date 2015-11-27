@@ -1,0 +1,12 @@
+conf:
+  image: ndelitski/confd-entry:0.1.0
+  command: -backend=redis -node=redis:6379 -interval=5
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+  external_links:
+    - conf/redis:redis
+  restart: always
+  tty: true
+  stdin_open: true
+  labels:
+    io.rancher.container.hostname_override: container_name

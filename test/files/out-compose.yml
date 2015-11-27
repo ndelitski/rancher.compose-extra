@@ -1,0 +1,32 @@
+frontend-conf:
+  image: 'ndelitski/confd-entry:0.1.0'
+  command: '-backend=redis -node=redis:6379 -interval=5'
+  volumes:
+    - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    - /etc/frontend
+    - /etc/nginx/conf.d
+  external_links:
+    - 'conf/redis:redis'
+  restart: always
+  tty: true
+  stdin_open: true
+  labels:
+    io.rancher.container.hostname_override: container_name
+event-sink:
+  image: 'registry/mail.event-sink:0.0.3'
+  external_links:
+    - 'conf/redis:redis'
+  volumes_from:
+    - mail-config
+  environment:
+    CONFIGURATION_FILE: /etc/mail/config.event-sink.json
+    PORT: '${unresolved_variable}'
+  restart: always
+  tty: true
+  stdin_open: true
+  labels:
+    io.rancher.container.hostname_override: container_name
+    io.rancher.sidekicks: mail-config
+    'io.rancher.scheduler.affinity:container_label_ne': 'io.rancher.stack_service.name=$${stack_name}/$${service_name}'
+    'io.rancher.scheduler.affinity:host_label_soft': mail=1
+    io.rancher.container.pull_image: always

@@ -1,0 +1,25 @@
+{
+  "name": "rancher-compose-extra",
+  "version": "0.1.1",
+  "description": "Pre-process docker-compose.yml files before passing to rancher-compose cli",
+  "main": "dist/process-file.js",
+  "bin": {
+    "rancher-compose-extra": "bin/compose-extra.js"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha $(find test -name '*.es6' | sort)",
+    "build": "./node_modules/.bin/babel src/ -d dist/ --optional runtime",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "js-yaml": "^3.4.3",
+    "lodash": "^3.10.1",
+    "yamljs": "^0.2.4",
+    "babel-runtime": "^5.8.25"
+  },
+  "devDependencies": {
+    "babel": "^5.8.25",
+    "chai": "^3.4.0",
+    "mocha": "^2.3.3"
+  }
+}

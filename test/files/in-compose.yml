@@ -1,0 +1,14 @@
+frontend-conf:
+  extends:
+    file: ../common/conf.yml
+    service: conf
+  volumes:
+    - /etc/frontend
+    - /etc/nginx/conf.d
+event-sink:
+  extends:
+    file: ../common/mail-service.yml
+    service: mail-service
+    version: 0.0.3
+  environment:
+    PORT: ${unresolved_variable}

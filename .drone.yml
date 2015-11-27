@@ -1,0 +1,17 @@
+build:
+  image: node:4.2.1
+  environment:
+    NPM_CONFIG_LOGLEVEL: warn
+  commands:
+    - npm i
+    - npm test
+cache:
+  mount:
+    - .git
+publish:
+  npm:
+    username: $$NPM_USERNAME
+    password: $$NPM_PASSWORD
+    email: $$NPM_EMAIL
+    when:
+      event: tag

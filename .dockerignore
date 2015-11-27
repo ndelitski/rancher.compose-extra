@@ -1,0 +1,10 @@
+.git
+.gitignore
+LICENSE
+VERSION
+*.md
+Makefile
+*.log
+.idea
+
+node_modules
